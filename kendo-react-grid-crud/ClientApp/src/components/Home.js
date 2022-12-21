@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css'
 import { useState, useEffect } from "react";
 
 import { Grid, GridColumn, GridToolbar } from '@progress/kendo-react-grid';
+import { Button } from "@progress/kendo-react-buttons";
 import { mapTree } from "@progress/kendo-react-treelist";
 import { clone } from '@progress/kendo-react-common';
 
@@ -60,7 +61,15 @@ const Home = (props) => {
         let dateWitnNotimeZone = new Date(
             myToday.getTime() - offsetMiliseconds
         );
-        let newRecord = { productID: null, firstOrderedOn: dateWitnNotimeZone, category: { categoryID: 1, categoryName: "Beverages"}, inEdit: true }
+        let newRecord = {
+            productID: null,
+            firstOrderedOn: dateWitnNotimeZone,
+            category: { categoryID: 1, categoryName: "Beverages" },
+            inEdit: true,
+            ProductName: 'New Product',
+            Discontinued: false,
+            UnitsInStock: 1
+        }
         let newData = [...data];
         newData.unshift(newRecord);
         setData(newData)
@@ -104,7 +113,7 @@ const Home = (props) => {
             take: dataState.take,
             skip: dataState.skip
         }
-        Axios.delete("https://localhost:44487/products", { data: { ...data, product: dataItem }}).then(
+        Axios.delete("https://localhost:44487/products", { data: { ...data, product: dataItem } }).then(
             (response) => {
                 let parsedDataNew = mapTree(response.data.data, 'items', item => {
                     item.firstOrderedOn = new Date(item.firstOrderedOn);
@@ -224,45 +233,45 @@ const Home = (props) => {
                 cancel: cancel
             }}
         >
-        <Grid
-            style={{
-                height: "520px",
-            }}
-            data={data}
-            editField="inEdit"
-            onItemChange={handleItemChange}
-            onDataStateChange={handleDataStateChange}
-            {...dataState}
-            pageable
-            sortable
-            filterable
-            groupable
-            total={total}
-        >
-            <GridToolbar>
-                <div>
-                    <button
+            <Grid
+                style={{
+                    height: "520px",
+                }}
+                data={data}
+                editField="inEdit"
+                onItemChange={handleItemChange}
+                onDataStateChange={handleDataStateChange}
+                {...dataState}
+                pageable
+                sortable
+                filterable
+                groupable
+                total={total}
+            >
+                <GridToolbar>
+                    <div>
+                        <Button
                             title="Add new"
-                            className="k-button k-primary"
+                            themeColor="primary"
                             onClick={addRecord}
-                    >
-                        Add new
-                    </button>
-                </div>
-            </GridToolbar>
-            <GridColumn field="productID" title="Id" width="100px" editable={false} filterable={false} />
+                        >
+                            Add new
+                        </Button>
+                    </div>
+                </GridToolbar>
+                <GridColumn field="productID" title="Id" width="100px" editable={false} filterable={false} />
                 <GridColumn field="productName" title="Name" />
                 <GridColumn field="category.categoryName" title="Category" cell={DropDownCell} />
-            <GridColumn field="firstOrderedOn" title="First Ordered On" editor="date" filter='date' format={'{0:d}'} />
-            <GridColumn
-                field="unitsInStock"
-                title="Units"
-                width="150px"
-                editor="numeric"
-                filter="numeric"
-            />
-            <GridColumn field="discontinued" title="Discontinued" editor="boolean" filter="boolean" />
-            <GridColumn width="200px" cell={MyCommandCell} />
+                <GridColumn field="firstOrderedOn" title="First Ordered On" editor="date" filter='date' format={'{0:d}'} />
+                <GridColumn
+                    field="unitsInStock"
+                    title="Units"
+                    width="150px"
+                    editor="numeric"
+                    filter="numeric"
+                />
+                <GridColumn field="discontinued" title="Discontinued" editor="boolean" filter="boolean" />
+                <GridColumn width="200px" cell={MyCommandCell} />
             </Grid>
         </DataContext.Provider>
     )
