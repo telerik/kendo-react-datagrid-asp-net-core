@@ -1,4 +1,5 @@
 ﻿import * as React from "react";
+import { Button } from "@progress/kendo-react-buttons";
 import DataContext from '../../contexts/data-context';
 
 const MyCommandCell = props => {
@@ -37,20 +38,20 @@ const MyCommandCell = props => {
 
     return inEdit ?
             (<td className="k-command-cell">
-                <button className="k-button k-grid-save-command" onClick={handleAddUpdate}>
+                <Button onClick={handleAddUpdate}>
                     {isNewItem ? "Add" : "Update"}
-                </button>
-                <button className="k-button k-grid-cancel-command" onClick={handleDiscardCancel}>
+                </Button>
+                <Button onClick={handleDiscardCancel}>
                     {isNewItem ? "Discard" : "Cancel"}
-                </button>
+                </Button>
             </td>) :   
             (<td className="k-command-cell">
-                <button className="k-primary k-button k-grid-edit-command" onClick={handleEdit}>
+                <Button themeColor="primary" onClick={handleEdit}>
                     Edit
-                </button>
-                <button className="k-button k-grid-remove-command" onClick={handleDelete}>
+                </Button>
+                <Button onClick={handleDelete}>
                     Remove
-                </button>
+                </Button>
             </td>);
 };
 

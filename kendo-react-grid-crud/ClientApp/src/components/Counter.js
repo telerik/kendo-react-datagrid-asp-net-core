@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from "@progress/kendo-react-buttons";
 
 export class Counter extends Component {
   static displayName = Counter.name;
@@ -24,7 +25,7 @@ export class Counter extends Component {
 
         <p aria-live="polite">Current count: <strong>{this.state.currentCount}</strong></p>
 
-        <button className="k-button" onClick={this.incrementCounter}>Increment</button>
+        <Button onClick={this.incrementCounter}>Increment</Button>
       </div>
     );
   }
