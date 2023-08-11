@@ -352,3 +352,6 @@ MigrationBackup/
 # React App node_modules and package-lock.json
 **/**/package-lock.json
 **/**/node_modules
+
+# License file
+**/kendo-ui-license**
